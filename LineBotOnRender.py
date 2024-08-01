@@ -29,10 +29,21 @@ def callback():
         abort(400)
     return 'OK'
 
+
+@app.route('/')
+def index():
+    return render_template('test.html')
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     mtext = event.message.text
-    if mtext == '@傳送文字':
+    if mtext.startswith('姓名:'):
+        # 這裡可以處理接收到的資料
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='已收到您的資料：\n' + text)
+        )
+    elif mtext == '@傳送文字':
         try:
             message = TextSendMessage(  
                 text = "我是 Linebot，\n您好！"
@@ -60,7 +71,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, message)
         except:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤！'))
-
+    
     elif mtext == '@多項傳送':
         try:
             message = [  #串列
@@ -92,7 +103,7 @@ def handle_message(event):
         except:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤！'))
 
-    if mtext == '@快速選單':
+    elif mtext == '@快速選單':
         try:
             message = TextSendMessage(
                 text='請選擇最喜歡的程式語言',
