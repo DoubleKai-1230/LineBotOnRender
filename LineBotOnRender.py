@@ -37,10 +37,8 @@ def index():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     mtext = event.message.text
-    if mtext.startswith('姓名:'):
-        # 這裡可以處理接收到的資料
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='我們已收到你的資料'))
-    elif mtext == '@傳送文字':
+
+    if mtext == '@傳送文字':
         try:
             message = TextSendMessage(  
                 text = "我是 Linebot，\n您好！"
