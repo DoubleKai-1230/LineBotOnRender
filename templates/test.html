@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         /* 新增的 CSS 樣式 */
         input::placeholder, select::placeholder {
@@ -129,8 +130,20 @@
     <footer style="text-align: center;">
         <p>&copy; 2024 Be Mom Cares保留所有權利。</p>
     </footer>
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
+        // LIFF 初始化
+        function initializeLiff(myLiffId) {
+            liff.init({ liffId: myLiffId })
+                .then(() => {
+                    if (!liff.isLoggedIn()) {
+                        liff.login();
+                    }
+                })
+                .catch((err) => {
+                    console.log('LIFF 初始化失敗', err);
+                });
+        }
+
         // 新增的 JavaScript 函數
         function myFunction() {
             var x = document.getElementById("myLinks");
@@ -193,9 +206,34 @@
         // 綁定確定按鈕的點擊事件
         $('#sure').click(function() {
             if (validateForm()) {
-                // 在這裡處理確認後的後續步驟，例如提交表單或進行其他操作
-                alert('表單提交成功！');
+                // 收集表單資料
+                var formData = {
+                    name: $('#name').val(),
+                    gender: $('input[name="drone"]:checked').val(),
+                    phone: $('#number').val(),
+                    email: $('#gmail').val(),
+                    address: $('#address').val(),
+                    reserve: $('#reserve').val(),
+                    item: $('#item').val(),
+                    datetime: $('#datetime').val(),
+                    time: $('#time').val()
+                };
+                
+                // 使用 LIFF SDK 傳送資料到 LINE Bot
+                liff.sendMessages([{
+                    type: 'text',
+                    text: `姓名: ${formData.name}\n性別: ${formData.gender}\n電話: ${formData.phone}\n電子郵件: ${formData.email}\n地址: ${formData.address}\n預約商家: ${formData.reserve}\n預約項目: ${formData.item}\n預約日期: ${formData.datetime}\n預約時間: ${formData.time}`
+                }]).then(() => {
+                    alert('表單提交成功！');
+                }).catch((err) => {
+                    console.log('傳送訊息失敗！', err);
+                });
             }
+        });
+
+        // 初始化 LIFF
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeLiff('2005466413-D4Rd4Oz2');  // 請替換為您的 LIFF ID
         });
     </script>
 </body>
