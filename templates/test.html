@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>合作商家</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* 新增的 CSS 樣式 */
+        input::placeholder, select::placeholder {
+            color: #ccc; /* 這裡設定 placeholder 文字的淺色 */
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .mobile-container {
+            max-width: 480px;
+            margin: auto;
+            background-color: #555;
+            height: 500px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #d0baaf;
+            position: relative;
+        }
+
+        .topnav #myLinks {
+            display: none;
+        }
+
+        .topnav a {
+            color: white;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            display: block;
+        }
+
+        .topnav a.icon {
+            background: #d0baaf;
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: rgb(129, 50, 50);
+        }
+
+        .active {
+            background-color: #c6a190;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topnav" id="#home">
+        <a href="#" class="active">合作商家</a>
+        <div id="myLinks">
+            <a href="#Keyword">關鍵字搜尋</a>
+            <a href="#Merchant">合作商家</a>
+            <a href="#Daily">日記</a>
+            <a href="#Sport">舒緩運動</a>
+            <a href="#Community">社群推薦</a>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()" style="color: #9a6045;">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6" style="margin: 10px">
+                <label>姓名</label>
+                <input type="text" id="name" placeholder="例:陳小一" class="form-control" />
+                <label>性別</label>
+                <div>
+                    <input type="radio" id="huey" name="drone" value="huey" checked />
+                    <label for="huey">男</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="dewey" name="drone" value="dewey" />
+                    <label for="dewey">女</label>
+                </div>
+                <label>電話</label>
+                <input type="tel" id="number" placeholder="例:0976888888" class="form-control" />
+                <label>電子郵件</label>
+                <input type="mail" id="gmail" placeholder="例:xxx@gmail.com" class="form-control" />
+                <label>地址</label>
+                <input type="text" id="address" placeholder="例:台北市信義區xxx" class="form-control" />
+                <label>預約商家</label>
+                <select id="reserve" class="form-control">
+                    <option value="a">a商家</option>
+                    <option value="b">b商家</option>
+                    <option value="c">c商家</option>
+                    <option value="d">d商家</option>
+                </select>
+                <label>預約項目</label>
+                <select id="item" class="form-control">
+                    <option value="a1">a項目1</option>
+                    <option value="a2">a項目2</option>
+                    <option value="a3">a項目3</option>
+                </select>
+                <label>預約日期</label>
+                <input type="date" id="datetime" class="form-control" />
+                <label>預約時間</label>
+                <select id="time" class="form-control">
+                    <option value="t1">10:00</option>
+                    <option value="t2">12:00</option>
+                    <option value="t3">14:00</option>
+                    <option value="t4">15:00</option>
+                </select>
+                <br>
+                <button class="btn btn-success btn-block" id="sure" style="background-color: #c6a190; border-color: transparent;">確定</button>
+                
+            </div>
+        </div>
+    </div>
+    <footer style="text-align: center;">
+        <p>&copy; 2024 Be Mom Cares保留所有權利。</p>
+    </footer>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script>
+        // 新增的 JavaScript 函數
+        function myFunction() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+
+        // 當商家選項改變時，更新預約項目
+        $('#reserve').change(function () {
+            var selectedMerchant = $(this).val();
+            // 根據選擇的商家更新預約項目
+            if (selectedMerchant === 'a') {
+                $('#item').html(`
+                    <option value="a1">a商家的項目1</option>
+                    <option value="a2">a商家的項目2</option>
+                    <option value="a3">a商家的項目3</option>
+                `);
+            } else if (selectedMerchant === 'b') {
+                $('#item').html(`
+                    <option value="b1">b商家的項目1</option>
+                    <option value="b2">b商家的項目2</option>
+                    <option value="b3">b商家的項目3</option>
+                `);
+            } else if (selectedMerchant === 'c') {
+                $('#item').html(`
+                    <option value="c1">c商家的項目1</option>
+                    <option value="c2">c商家的項目2</option>
+                    <option value="c3">c商家的項目3</option>
+                `);
+            } else if (selectedMerchant === 'd') {
+                $('#item').html(`
+                    <option value="d1">d商家的項目1</option>
+                    <option value="d2">d商家的項目2</option>
+                    <option value="d3">d商家的項目3</option>
+                `);
+            }
+        });
+
+        // 確認所有欄位皆已填寫的函數
+        function validateForm() {
+            var name = $('#name').val();
+            var phone = $('#number').val();
+            var email = $('#gmail').val();
+            var address = $('#address').val();
+            var reserve = $('#reserve').val();
+            var item = $('#item').val();
+            var datetime = $('#datetime').val();
+            var time = $('#time').val();
+
+            if (!name || !phone || !email || !address || !reserve || !item || !datetime || !time) {
+                alert('請填寫所有欄位');
+                return false;
+            }
+            return true;
+        }
+
+        // 綁定確定按鈕的點擊事件
+        $('#sure').click(function() {
+            if (validateForm()) {
+                // 在這裡處理確認後的後續步驟，例如提交表單或進行其他操作
+                alert('表單提交成功！');
+            }
+        });
+    </script>
+</body>
+</html>
