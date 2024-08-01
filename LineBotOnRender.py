@@ -8,7 +8,7 @@ Created on Thu Jun  6 00:41:30 2024
 from flask import Flask
 app = Flask(__name__)
 
-from flask import request, abort
+from flask import request, abort,render_template
 from linebot import  LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage,TextSendMessage, ImageSendMessage, StickerSendMessage, LocationSendMessage, QuickReply, QuickReplyButton, MessageAction
