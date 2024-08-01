@@ -30,7 +30,7 @@ def callback():
     return 'OK'
 
 
-@app.route('/')
+@app.route('/page')
 def index():
     return render_template('test.html')
 
